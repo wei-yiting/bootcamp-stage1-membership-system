@@ -2,6 +2,10 @@ html{
     font-family: sans-serif;
 }
 
+body{
+    background-color: whitesmoke;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -13,7 +17,7 @@ header{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(8, 8, 74);
+    background-color: rgb(34, 34, 68);
     color:white;
 }
 

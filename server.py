@@ -6,7 +6,6 @@ app.secret_key = b'\xb6\xd3\xb2mr\xab\xde\x9b\x92UI\x1fKXu\xef'
 
 @app.route('/')
 def index():
-    session["status"] = "未登入"
     return render_template('index.html')
 
 
