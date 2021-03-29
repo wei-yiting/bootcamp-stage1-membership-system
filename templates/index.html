@@ -1,19 +1,12 @@
-<!DOCTYPE html>
-<html lang="zh">
+{% extends "base.html"%}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
+{% block content %}
 
-<body>
     <header>
         <h1>歡迎光臨，請註冊或登入系統</h1>
     </header>
 
-    <main>
+    <main>  
         <section class="sign-up">
             <h2>註冊系統</h2>
             <form action="/signup" method="POST">
@@ -47,8 +40,7 @@
                 <button>登入</button>
             </form>
         </section>
-
     </main>
-</body>
 
-</html>
+{% endblock %}
+   

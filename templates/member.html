@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html"%}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Member</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
+{% block content %}
 
-<body>
     <header>
         <h1>歡迎光臨，這是會員頁</h1>
     </header>
@@ -17,6 +10,5 @@
         <p>{{session['name']}}，歡迎登入系統</p>
         <a href="/signout">登出系統</a>
     </main>
-</body>
 
-</html>
+{% endblock %}
