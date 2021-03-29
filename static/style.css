@@ -25,10 +25,15 @@ main{
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin: 5vh auto;
+    margin: 2.5vh auto;
 }
 
-main>*{
+section{
+    margin: 10px auto;
+    padding: 0 10vw;
+}
+
+section>*{
     margin: 0.5rem;
 }
 
@@ -40,6 +45,7 @@ h1{
 
 h2{
     font-size:1.25rem;
+    text-align:center;
 }
 
 form{
@@ -48,6 +54,7 @@ form{
     align-items: center;
     margin-top: 2vh;
 }
+
 
 
 form>div{
@@ -61,6 +68,17 @@ input{
 }
 
 button{
-    margin-top:2vh;
+    margin-top:1vh;
     padding: 0.25em 1.25em;
+}
+
+.sign-up{
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgb(168, 168, 168);
+}
+
+
+p{
+   font-size: 1.25rem;
+   margin: 20px auto; 
 }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Member</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
@@ -14,7 +14,7 @@
     </header>
 
     <main>
-        <p>恭喜您，成功登入系統</p>
+        <p>{{session['name']}}，歡迎登入系統</p>
         <a href="/signout">登出系統</a>
     </main>
 </body>

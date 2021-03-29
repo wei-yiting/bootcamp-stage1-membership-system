@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
@@ -14,7 +14,11 @@
     </header>
 
     <main>
-        <p>帳號、或密碼輸入錯誤</p>
+        {% if error_message %}
+            <p>{{error_message}}</p>
+        {% else %}
+            <p>無已知錯誤訊息</p>
+        {% endif %}
         <a href="/">返回首頁</a>
     </main>
 </body>
