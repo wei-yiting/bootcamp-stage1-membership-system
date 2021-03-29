@@ -37,10 +37,6 @@ class User(db.Model):
         self.username = username
         self.password = password
         self.time = time
-    
-    def __repr__(self):
-        return f'{self.username}'
-    
 
 
 ######################
@@ -49,7 +45,6 @@ class User(db.Model):
 
 @app.route('/', methods=['GET'])
 def index():
-    session['status'] = '未登入'
     return render_template('index.html')
 
 
@@ -101,7 +96,7 @@ def error():
 
 @app.route('/member/')
 def member():
-    if session['status'] == '已登入':
+    if session['status'] and session['status'] == '已登入':
         return render_template('member.html')
     else:
         return redirect(url_for('index'))
@@ -109,10 +104,10 @@ def member():
 
 @app.route('/signout')
 def signout():
-    if session['status'] == '未登入':
+    if session['status']:
         return redirect(url_for('index'))
     if session['status'] == '已登入':
-        session['status'] = '未登入'
+        session['status'] = None
         session['name'] = ''
         return redirect(url_for('index'))
     
