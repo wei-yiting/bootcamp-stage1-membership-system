@@ -1,16 +1,19 @@
+import os
 from flask import Flask, render_template, redirect, url_for, request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import datetime
 
+
 ###########################
 ######### SET UP ##########
 ###########################
+
 app = Flask(__name__)
-app.secret_key = b'\xb6\xd3\xb2mr\xab\xde\x9b\x92UI\x1fKXu\xef'
+app.secret_key = os.urandom(24)
 
 # set up for SQL databese and database migration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Sontforg123@localhost/membership_website'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Sontforg123@localhost/website'
 app.config['SQLAHCHEMY_TRACK_MODIFICATION'] = False
 
 db = SQLAlchemy(app)
@@ -21,15 +24,14 @@ Migrate(app,db)
 ### Define Model(table) ###
 ###########################
 
-
 class User(db.Model):
     
     __tablename__ = 'users'
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    username = db.Column(db.String(255), nullable=False)
-    password = db.Column(db.String(255), nullable=False)
+    username = db.Column(db.String(255,collation='binary'), nullable=False)
+    password = db.Column(db.String(255,collation='binary'), nullable=False)
     time = db.Column(db.DateTime)
     
     def __init__(self,name,username,password,time):
@@ -75,10 +77,10 @@ def signin():
     password = request.form['password']
     
     if User.query.filter_by(username=username).first():
-        
+    
         user = User.query.filter_by(username=username).first()
         
-        if user.password == password:
+        if user.password.decode('utf-8') == password:
             session['status'] = "已登入"
             session['name'] = user.name
             return redirect(url_for('member'))
@@ -104,15 +106,15 @@ def member():
 
 @app.route('/signout')
 def signout():
-    if session['status']:
+    if not session['status']:
         return redirect(url_for('index'))
-    if session['status'] == '已登入':
+    elif session['status'] == '已登入':
         session['status'] = None
         session['name'] = ''
         return redirect(url_for('index'))
     
-
+    
 
 if __name__ == '__main__':
-    app.run(port=3000)
+    app.run(port=3000,debug=True)
     
