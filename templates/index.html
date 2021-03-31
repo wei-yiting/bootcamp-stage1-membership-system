@@ -9,18 +9,26 @@
     <main>  
         <section class="sign-up">
             <h2>註冊系統</h2>
-            <form action="/signup" method="POST">
-                <div>
+            <form action="/signup" method="POST" id="sign-up-form">
+                <div class="form-control">
                     <label for="name">姓名</label>
                     <input type="text" name="name" id="name">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error Message</small>
                 </div>
-                <div>
+                <div class="form-control">
                     <label for="sign-up-username">帳號</label>
                     <input type="text" name="username" id="sign-up-username">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error Message</small>
                 </div>
-                <div>
+                <div class="form-control">
                     <label for="sign-up-password">密碼</label>
                     <input type="password" name="password" id="sign-up-password">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error Message</small>
                 </div>
                 <button>註冊</button>
             </form>
@@ -28,19 +36,27 @@
 
         <section class="sign-in">
             <h2>登入系統</h2>
-            <form action="signin" method="POST">
-                <div>
+            <form action="signin" method="POST" id="sign-in-form">
+                <div class="form-control">
                     <label for="sign-in-username">帳號</label>
                     <input type="text" name="username" id="sign-in-username">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error Message</small>
                 </div>
-                <div>
+                <div class="form-control">
                     <label for="sign-in-password">密碼</label>
                     <input type="password" name="password" id="sign-in-password">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small>Error Message</small>
                 </div>
                 <button>登入</button>
             </form>
         </section>
     </main>
+
+    <script src="/static/script.js"></script>
 
 {% endblock %}
    

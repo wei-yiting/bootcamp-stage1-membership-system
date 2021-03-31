@@ -2,6 +2,10 @@ html{
     font-family: sans-serif;
 }
 
+*{
+    box-sizing: border-box;
+}
+
 body{
     background-color: whitesmoke;
 }
@@ -57,20 +61,72 @@ form{
 
 
 
-form>div{
+.form-control{
     margin: 1vh auto;
+    position: relative;
 }
 
-input{
+.form-control label{
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.form-control input{
+    padding: 5px;
     width: 200px;
     margin-left: 5px;
     height: 1.5rem;
+    border-radius: 4px;
+    border-style: solid;
+    border: 1px solid rgb(161, 161, 161);
+}
+
+.form-control.success input{
+    border-color: #2ecc71;
+}
+
+.form-control.error input{
+    border-color: #e74c3c;
+}
+
+
+.form-control i{
+    position: absolute;
+    top: 8px;
+    right: 6px;
+    visibility: hidden;
+    font-size: 0.6rem;
+}
+
+.form-control.success i.fa-check-circle{
+    visibility: visible;
+    color: #2ecc71;
+
+}
+
+.form-control.error i.fa-exclamation-circle{
+    visibility: visible;
+    color: #e74c3c;
+}
+
+.form-control small{
+    visibility: hidden;
+    display: block;
+    text-align: right;
+    font-size: 0.6rem;
+}
+
+.form-control.error small{
+    color: #e74c3c;
+    visibility: visible;
 }
 
 button{
     margin-top:1vh;
     padding: 0.25em 1.25em;
 }
+
+
 
 .sign-up{
     padding-bottom: 20px;
