@@ -33,7 +33,6 @@ main{
 }
 
 section{
-    margin: 10px auto;
     padding: 0 10vw;
 }
 
@@ -127,14 +126,56 @@ button{
 }
 
 
-
-.sign-up{
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgb(168, 168, 168);
-}
-
-
 p{
    font-size: 1.25rem;
    margin: 20px auto; 
 }
+
+/* ======== modal ======== */
+.modal-bg{
+    position:fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100vh;
+    background-color:rgba(0,0,0,0.5);
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s;
+}
+
+.modal-bg.show{
+    visibility: visible;
+    opacity: 1;
+}
+
+.sign-up{
+    padding: 50px;
+    position: relative;
+    z-index: 100;
+    border-bottom: 1px solid rgb(168, 168, 168);
+    background-color: whitesmoke;
+    border-radius:10px;
+}
+
+.sign-in.hide{
+    z-index: -1;
+}
+
+.modal-close{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: rgb(128, 128, 128);
+    transition: color 0.2s;
+}
+
+.modal-close:hover{
+    color: rgb(61, 61, 61);
+    cursor: pointer;
+}
+
+.sign-up

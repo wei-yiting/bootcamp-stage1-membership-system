@@ -1,3 +1,5 @@
+
+// ============= form validation and error message ============
 const signUpForm = document.getElementById('sign-up-form');
 const accountName = document.getElementById('name');
 const signUpUsername = document.getElementById('sign-up-username');
@@ -39,3 +41,20 @@ function setErrorFor(inputfield, message){
     formControl.classList.add('error');
 }
 
+
+//============= Pop up Modal ================
+
+const modalBtn = document.getElementById('signup-modal-btn');
+const modal = document.getElementById('modal-bg');
+const signInArea = document.getElementById('sign-in')
+
+modalBtn.addEventListener('click', () => {
+    modal.classList.add('show');
+    signInArea.classList.add('hide')
+});
+
+const modalCloseBtn = document.getElementById('modal-close');
+modalCloseBtn.addEventListener('click', ()=>{
+    modal.classList.remove('show');
+    signInArea.classList.remove('hide');
+});
