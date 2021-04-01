@@ -44,7 +44,7 @@ function setErrorFor(inputfield, message){
 
 //============= Pop up Modal ================
 
-const modalBtn = document.getElementById('signup-modal-btn');
+const modalBtn = document.getElementById('signup-modal');
 const modal = document.getElementById('modal-bg');
 const signInArea = document.getElementById('sign-in')
 

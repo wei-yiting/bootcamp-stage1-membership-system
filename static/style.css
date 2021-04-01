@@ -58,7 +58,11 @@ form{
     margin-top: 2vh;
 }
 
+.sign-in{
+    margin:7.5vh auto 3vh;
+}
 
+/* === validation message */
 
 .form-control{
     margin: 1vh auto;
@@ -66,16 +70,16 @@ form{
 }
 
 .form-control label{
-    display: inline-block;
-    margin-bottom: 5px;
+    display: block;
+    color:rgb(73, 73, 73);
 }
 
 .form-control input{
     padding: 5px;
     width: 200px;
-    margin-left: 5px;
-    height: 1.5rem;
+    height: 1.75rem;
     border-radius: 4px;
+    margin-bottom: 5px;
     border-style: solid;
     border: 1px solid rgb(161, 161, 161);
 }
@@ -91,7 +95,7 @@ form{
 
 .form-control i{
     position: absolute;
-    top: 8px;
+    top: 33px;
     right: 6px;
     visibility: hidden;
     font-size: 0.6rem;
@@ -123,8 +127,8 @@ form{
 button{
     margin-top:1vh;
     padding: 0.25em 1.25em;
+    transition:background-color 0.2s;
 }
-
 
 p{
    font-size: 1.25rem;
@@ -157,7 +161,7 @@ p{
     position: relative;
     z-index: 100;
     border-bottom: 1px solid rgb(168, 168, 168);
-    background-color: whitesmoke;
+    background-color: rgba(245, 245, 245);
     border-radius:10px;
 }
 
@@ -178,4 +182,14 @@ p{
     cursor: pointer;
 }
 
-.sign-up
+.signup{
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition:color 0.2s, border-bottom 0.2s;
+    border-bottom: 2px solid transparent;
+}
+
+.signup:hover{
+    color:  rgb(42, 42, 139);
+    border-bottom: 2px solid rgb(42, 42, 139);
+}
