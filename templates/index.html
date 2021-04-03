@@ -7,6 +7,12 @@
     </header>
 
     <main>
+        {% for message in get_flashed_messages() %}
+        <div class="message">
+            {{message}}
+            <i class="fas fa-times message-close" id="message-close"></i>
+        </div>
+        {% endfor %}
         <section class="modal-bg" id="modal-bg">
             <div class="sign-up">
                 <h2>註冊系統</h2>

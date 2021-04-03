@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request, session
+from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import datetime
@@ -47,6 +47,10 @@ class User(db.Model):
 
 @app.route('/', methods=['GET'])
 def index():
+    if "message" in session:
+        flash_message = session['message']
+        flash(flash_message)
+        session['message'] = ''
     return render_template('index.html')
 
 
@@ -66,6 +70,8 @@ def signup():
         
         db.session.add(new_user)
         db.session.commit()
+        
+        session['message'] = "您已完成註冊，請用帳號密碼登入"
         
         return redirect(url_for('index'))
     
@@ -111,6 +117,7 @@ def signout():
     elif session['status'] == '已登入':
         session['status'] = None
         session['name'] = ''
+        session['message'] = "您已成功登出"
         return redirect(url_for('index'))
     
     
