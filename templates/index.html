@@ -8,10 +8,12 @@
 
     <main>
         {% for message in get_flashed_messages() %}
-        <div class="message">
-            {{message}}
-            <i class="fas fa-times message-close" id="message-close"></i>
-        </div>
+            {% if message %}
+                <div class="message" id="message">
+                    {{message}}
+                    <i class="fas fa-times message-close" id="message-close"></i>
+                </div>
+            {% endif%}
         {% endfor %}
         <section class="modal-bg" id="modal-bg">
             <div class="sign-up">

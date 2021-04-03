@@ -58,3 +58,12 @@ modalCloseBtn.addEventListener('click', ()=>{
     modal.classList.remove('show');
     signInArea.classList.remove('hide');
 });
+
+// ============ Flash message ================
+
+const message = document.getElementById('message');
+const messageClose = document.getElementById('message-close');
+
+messageClose.addEventListener('click', () => {
+    message.classList.add('hide');
+})
