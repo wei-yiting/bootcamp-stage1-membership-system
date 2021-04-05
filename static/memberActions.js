@@ -33,32 +33,62 @@ changeNameForm.addEventListener('submit', evt => {
     evt.preventDefault();
 
     const nameToChange = document.getElementById('nameToChange');
+    
     let newName = nameToChange.value;
 
-    let requestData = {name: newName};
+    if(newName.trim() === ""){
+    
+        setErrorFor(nameToChange, "姓名不可空白");
+        console.log("error!!!");
 
-    fetch(`${window.origin}/api/user`,{
-        method:'POST',
-        headers:new Headers({
-            "Content-Type":"application/json"
-        }),
-        body:JSON.stringify(requestData)
-    })
-    .then( response => response.json())
-    .then( data => {
-        const updataResult = document.getElementById('updateResult');
-        const updatedName = document.getElementById('updatedName');
-        if (data.ok){
-            updataResult.innerText = "更新成功";
-            updatedName.innerText = newName;
-        }
-        else if(data.error){
-            updataResult.innerText = "更新失敗";
-        }
-    })
-    .catch( err => {
-        console.log(`Fetch error: ${err}`);
-    })
+    }else{
 
-    nameToChange.value = '';
+        removeErrorFor(nameToChange);
+
+        let requestData = {name: newName};
+
+        fetch(`${window.origin}/api/user`,{
+            method:'POST',
+            headers:new Headers({
+                "Content-Type":"application/json"
+            }),
+            body:JSON.stringify(requestData)
+        })
+        .then( response => response.json())
+        .then( data => {
+            const updataResult = document.getElementById('updateResult');
+            const updatedName = document.getElementById('updatedName');
+            if (data.ok){
+                updataResult.innerText = "更新成功";
+                updatedName.innerText = newName;
+            }
+            else if(data.error){
+                updataResult.innerText = "更新失敗";
+            }
+        })
+        .catch( err => {
+            console.log(`Fetch error: ${err}`);
+        })
+
+        nameToChange.value = '';
+    }
 })
+
+
+// show error message from form field
+function setErrorFor(inputfield, message){
+    const formControl = inputfield.parentElement;
+    const errorMessage = formControl.querySelector('small');
+
+    errorMessage.innerText = message;
+    formControl.classList.add('error');
+}
+
+// show error message from form field
+function removeErrorFor(inputfield){
+    const formControl = inputfield.parentElement;
+    const errorMessage = formControl.querySelector('small');
+
+    errorMessage.innerText = "";
+    formControl.classList.remove('error');
+}

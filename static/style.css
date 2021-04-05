@@ -68,12 +68,12 @@ form{
     margin: 1.5vh auto;
 }
 
-.topic a{
+.link{
     color:rgb(42, 42, 139);
     transition: color 0.2s;
 }
 
-.topic a:hover{
+.link:hover{
     color: rgb(49, 49, 214);
 }
 
@@ -103,10 +103,6 @@ form{
     border: 1px solid rgb(161, 161, 161);
 }
 
-.form-control.success input{
-    border-color: #2ecc71;
-}
-
 .form-control.error input{
     border-color: #e74c3c;
 }
@@ -120,11 +116,6 @@ form{
     font-size: 0.6rem;
 }
 
-.form-control.success i.fa-check-circle{
-    visibility: visible;
-    color: #2ecc71;
-
-}
 
 .form-control.error i.fa-exclamation-circle{
     visibility: visible;
@@ -216,7 +207,7 @@ p{
 /* ======= flash alert ======= */
 
 .message{
-    background-color:#acf3ca;
+    background-color:#c1f4d6;
     width: 100%;
     height: 10vh;
     display: flex;
@@ -231,7 +222,7 @@ p{
 
 .message i {
     position: absolute;
-    top:3vh;
+    top:3.5vh;
     right: 10px;
     color: grey;
 }
@@ -261,7 +252,6 @@ p{
     margin-top: 2vh;
 }
 
-
 .member-action input{
     padding: 5px;
     width: 200px;
@@ -280,11 +270,22 @@ p{
 }
 
 .member-action p{
-    font-size: 0.9rem;
+    font-size: 1rem;
     margin: 1vh auto;
+    color:rgb(28, 89, 28);
 }
 
 .divider{
     width:120px;
     border-bottom: 2px solid rgb(221, 221, 221);
 }
+
+.member-action .form-control i{
+    top: 0.7rem;
+    right: 4rem;
+}
+
+.member-action .form-control small{
+    text-align: left;
+}
+

@@ -13,7 +13,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 # set up for SQL databese and database migration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Sontforg123@localhost/website'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
 app.config['SQLAHCHEMY_TRACK_MODIFICATION'] = False
 app.config['JSON_AS_ASCII'] = False
 
@@ -118,7 +118,7 @@ def signout():
     if not session['status']:
         return redirect(url_for('index'))
     elif session['status'] == '已登入':
-        session['status'] = None
+        session.pop('status', None)
         session['name'] = ''
         session['message'] = "您已成功登出"
         return redirect(url_for('index'))
@@ -126,25 +126,30 @@ def signout():
 
 @app.route('/api/users', methods=['GET'])
 def get_user():
-    username_to_get = request.args.get('username')
+    if 'status' not in session:
+        
+        return "登入後才能看到此頁內容"
     
-    if User.query.filter_by(username=username_to_get).first():
-        
-        user_to_get = User.query.filter_by(username=username_to_get).first()
-        
-        response = {
-            "data":{
-                "id":user_to_get.id,
-                "name":user_to_get.name, 
-                "username":user_to_get.username.decode('utf-8')
+    elif session['status'] == '已登入':
+        username_to_get = request.args.get('username')
+    
+        if User.query.filter_by(username=username_to_get).first():
+            
+            user_to_get = User.query.filter_by(username=username_to_get).first()
+            
+            response = {
+                "data":{
+                    "id":user_to_get.id,
+                    "name":user_to_get.name, 
+                    "username":user_to_get.username.decode('utf-8')
+                }
             }
-        }
-    else:
-        response = {
-            "data": None
-        }
+        else:
+            response = {
+                "data": None
+            }
 
-    return jsonify(response)
+        return jsonify(response)
 
 
 @app.route('/api/user', methods=['POST'])
@@ -165,7 +170,7 @@ def change_name():
     except:
         response = make_response(jsonify({
             "error":True
-        }),503)
+        }),200)
         return response
 
 
