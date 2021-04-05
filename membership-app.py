@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request, session, flash
+from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import datetime
@@ -15,6 +15,8 @@ app.secret_key = os.urandom(24)
 # set up for SQL databese and database migration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:Sontforg123@localhost/website'
 app.config['SQLAHCHEMY_TRACK_MODIFICATION'] = False
+app.config['JSON_AS_ASCII'] = False
+
 
 db = SQLAlchemy(app)
 Migrate(app,db)
@@ -89,6 +91,7 @@ def signin():
         if user.password.decode('utf-8') == password:
             session['status'] = "已登入"
             session['name'] = user.name
+            session['username'] = user.username
             return redirect(url_for('member'))
         else:
             return redirect(url_for('error', message="帳號或密碼輸入錯誤"))
@@ -120,7 +123,52 @@ def signout():
         session['message'] = "您已成功登出"
         return redirect(url_for('index'))
     
+
+@app.route('/api/users', methods=['GET'])
+def get_user():
+    username_to_get = request.args.get('username')
     
+    if User.query.filter_by(username=username_to_get).first():
+        
+        user_to_get = User.query.filter_by(username=username_to_get).first()
+        
+        response = {
+            "data":{
+                "id":user_to_get.id,
+                "name":user_to_get.name, 
+                "username":user_to_get.username.decode('utf-8')
+            }
+        }
+    else:
+        response = {
+            "data": None
+        }
+
+    return jsonify(response)
+
+
+@app.route('/api/user', methods=['POST'])
+def change_name():
+    req = request.get_json();
+    new_name = req['name']
+    
+    user = User.query.filter_by(username=session['username']).first()
+    user.name = new_name
+    try:
+        db.session.add(user)
+        db.session.commit()
+        session['name'] = new_name
+        response = make_response(jsonify({
+            "ok":True
+        }),200)
+        return response
+    except:
+        response = make_response(jsonify({
+            "error":True
+        }),503)
+        return response
+
+
 
 if __name__ == '__main__':
     app.run(port=3000,debug=True)

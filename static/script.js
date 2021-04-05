@@ -1,4 +1,3 @@
-
 // ============= form validation and error message ============
 const signUpForm = document.getElementById('sign-up-form');
 const accountName = document.getElementById('name');
@@ -67,3 +66,4 @@ const messageClose = document.getElementById('message-close');
 messageClose.addEventListener('click', () => {
     message.classList.add('hide');
 })
+

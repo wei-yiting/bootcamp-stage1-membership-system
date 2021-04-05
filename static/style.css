@@ -58,6 +58,25 @@ form{
     margin-top: 2vh;
 }
 
+.topic{
+    margin:5vh auto 0;
+    text-align:center;
+}
+
+.topic p{
+    letter-spacing:0.1rem;
+    margin: 1.5vh auto;
+}
+
+.topic a{
+    color:rgb(42, 42, 139);
+    transition: color 0.2s;
+}
+
+.topic a:hover{
+    color: rgb(49, 49, 214);
+}
+
 .sign-in{
     margin:5vh auto 3vh;
 }
@@ -184,7 +203,7 @@ p{
 
 .signup{
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     transition:color 0.2s, border-bottom 0.2s;
     border-bottom: 2px solid transparent;
 }
@@ -220,4 +239,52 @@ p{
 .message.hide{
     visibility: hidden;
     opacity: 0;
+}
+
+/* ========= member form input ========= */
+
+.member-action{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 7.5vh auto 3vh;
+}
+
+.member-action h2{
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    color:rgb(73, 73, 73);
+}
+
+.member-action form{
+    display: block;
+    margin-top: 2vh;
+}
+
+
+.member-action input{
+    padding: 5px;
+    width: 200px;
+    height: 2rem;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    border-style: solid;
+    border: 1px solid rgb(161, 161, 161);
+    display: inline-block;
+}
+
+.member-action button{
+    display: inline-block;
+    margin-top:0;
+    padding: 0.25em 0.75em;
+}
+
+.member-action p{
+    font-size: 0.9rem;
+    margin: 1vh auto;
+}
+
+.divider{
+    width:120px;
+    border-bottom: 2px solid rgb(221, 221, 221);
 }

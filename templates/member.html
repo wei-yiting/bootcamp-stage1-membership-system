@@ -7,8 +7,35 @@
     </header>
 
     <main>
-        <p>{{session['name']}}，歡迎登入系統</p>
-        <a href="/signout">登出系統</a>
+        <div class="topic">
+            <p><span id=updatedName>{{session['name']}}</span>，歡迎登入系統</p>
+        </div>
+
+        <div class="member-action">
+            <h2>查詢會員姓名</h2>
+            <form action="/api/users" id="inquireForm" method="GET">
+                <input type="text" id="inquireUsername" name="username" placeholder="請輸入會員帳號">
+                <button>查詢</button>
+            </form>
+            <p id="inquireResult"></p>
+        </div>
+        
+        <div class="divider"></div>
+
+        <div class="member-action">
+        <h2>更新我的姓名</h2>
+            <form id="changeNameForm" method="POST">
+                <input type="text" id="nameToChange" name="username" placeholder="輸入新的姓名">
+                <button>更新</button>
+            </form>
+            <p id="updateResult"></p>
+        </div>
+
+        <div class="topic">
+            <a href="/signout">登出系統</a>
+        </div>
     </main>
+
+    <script src="/static/memberActions.js"></script>
 
 {% endblock %}

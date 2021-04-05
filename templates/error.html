@@ -7,12 +7,14 @@
     </header>
 
     <main>
-        {% if error_message %}
-            <p>{{error_message}}</p>
-        {% else %}
-            <p>無已知錯誤訊息</p>
-        {% endif %}
-        <a href="/">返回首頁</a>
+        <div class="topic">
+            {% if error_message %}
+                <p>{{error_message}}</p>
+            {% else %}
+                <p>無已知錯誤訊息</p>
+            {% endif %}
+            <a href="/">返回首頁</a>
+        </div>
     </main>
 
 {% endblock %}
