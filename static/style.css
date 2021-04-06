@@ -1,3 +1,5 @@
+/* ==== general style of all page ==== */
+
 html{
     font-family: sans-serif;
 }
@@ -77,11 +79,12 @@ form{
     color: rgb(49, 49, 214);
 }
 
+/* ==== form field, form empty check, error message ==== */
+
 .sign-in{
     margin:5vh auto 3vh;
 }
 
-/* === validation message */
 
 .form-control{
     margin: 1vh auto;
@@ -116,7 +119,6 @@ form{
     font-size: 0.6rem;
 }
 
-
 .form-control.error i.fa-exclamation-circle{
     visibility: visible;
     color: #e74c3c;
@@ -145,7 +147,9 @@ p{
    margin: 20px auto; 
 }
 
-/* ======== modal ======== */
+
+/* ========= pop-up modal ======== */
+
 .modal-bg{
     position:fixed;
     top:0;
@@ -204,7 +208,8 @@ p{
     border-bottom: 1px solid rgb(42, 42, 139);
 }
 
-/* ======= flash alert ======= */
+
+/* ======= flash message ====== */
 
 .message{
     background-color:#c1f4d6;
@@ -232,7 +237,7 @@ p{
     opacity: 0;
 }
 
-/* ========= member form input ========= */
+/* ========= member page form field ========= */
 
 .member-action{
     display: flex;
@@ -288,4 +293,3 @@ p{
 .member-action .form-control small{
     text-align: left;
 }
-

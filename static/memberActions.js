@@ -1,7 +1,11 @@
-// ============= member name search result ============
+//=========================================================== 
+//============= member name search result (AJAX) ============
+//===========================================================
+
 const inquireForm = document.getElementById('inquireForm');
 const inquireResult = document.getElementById('inquireResult');
 
+// fetch api to and process JSON, show result on page
 inquireForm.addEventListener('submit', evt => {
     evt.preventDefault();
     const inquireUsername = document.getElementById('inquireUsername');
@@ -25,10 +29,14 @@ inquireForm.addEventListener('submit', evt => {
     inquireUsername.value = '';
 })
 
-// ============= change name ================
+
+//=========================================================
+//============= Update user's own name  (AJAX) ============
+//=========================================================
 
 const changeNameForm = document.getElementById('changeNameForm');
 
+// When form submitted : fetch api and show result
 changeNameForm.addEventListener('submit', evt => {
     evt.preventDefault();
 
@@ -36,6 +44,7 @@ changeNameForm.addEventListener('submit', evt => {
     
     let newName = nameToChange.value;
 
+    // show error if update name field is empty
     if(newName.trim() === ""){
     
         setErrorFor(nameToChange, "姓名不可空白");
@@ -45,6 +54,7 @@ changeNameForm.addEventListener('submit', evt => {
 
         removeErrorFor(nameToChange);
 
+        // fetch api using POST method with JSON in request body
         let requestData = {name: newName};
 
         fetch(`${window.origin}/api/user`,{
@@ -56,6 +66,7 @@ changeNameForm.addEventListener('submit', evt => {
         })
         .then( response => response.json())
         .then( data => {
+            // show update result
             const updataResult = document.getElementById('updateResult');
             const updatedName = document.getElementById('updatedName');
             if (data.ok){
@@ -70,6 +81,7 @@ changeNameForm.addEventListener('submit', evt => {
             console.log(`Fetch error: ${err}`);
         })
 
+        // clear form field
         nameToChange.value = '';
     }
 })
@@ -84,7 +96,7 @@ function setErrorFor(inputfield, message){
     formControl.classList.add('error');
 }
 
-// show error message from form field
+// remove error message from form field
 function removeErrorFor(inputfield){
     const formControl = inputfield.parentElement;
     const errorMessage = formControl.querySelector('small');

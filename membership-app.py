@@ -47,6 +47,7 @@ class User(db.Model):
 ### view functions ###
 ######################
 
+### index page ###
 @app.route('/', methods=['GET'])
 def index():
     if "message" in session:
@@ -56,6 +57,7 @@ def index():
     return render_template('index.html')
 
 
+### signup url, redirect to index page after storing user credential into DB ###
 @app.route('/signup', methods=['POST'])
 def signup():
      
@@ -63,6 +65,7 @@ def signup():
     username = request.form['username']
     password = request.form['password']
     
+    # check if username exist
     if User.query.filter_by(username=username).first():
         return redirect(url_for('error', message="此帳號已被註冊"))
         
@@ -77,7 +80,8 @@ def signup():
         
         return redirect(url_for('index'))
     
-
+    
+### signin url, redirect to member/error page after checking credential in DB ###
 @app.route('/signin', methods=['POST'])
 def signin():
 
@@ -99,12 +103,12 @@ def signin():
     else:
         return redirect(url_for('error', message="帳號或密碼輸入錯誤"))
 
-
+### error page ###
 @app.route('/error/', methods=['GET'])
 def error():
     return render_template('error.html', error_message=request.args.get('message'))
 
-
+### member page (check if user logged in) ###
 @app.route('/member/')
 def member():
     if session['status'] and session['status'] == '已登入':
@@ -113,6 +117,7 @@ def member():
         return redirect(url_for('index'))
 
 
+### signout url, modify session and redirect to index page ###
 @app.route('/signout')
 def signout():
     if not session['status']:
@@ -123,7 +128,13 @@ def signout():
         session['message'] = "您已成功登出"
         return redirect(url_for('index'))
     
+    
+    
+#########################
+########## API ##########
+#########################
 
+### api for getting specified users info ###
 @app.route('/api/users', methods=['GET'])
 def get_user():
     if 'status' not in session:
@@ -152,6 +163,7 @@ def get_user():
         return jsonify(response)
 
 
+### api for update user's name ###
 @app.route('/api/user', methods=['POST'])
 def change_name():
     req = request.get_json();

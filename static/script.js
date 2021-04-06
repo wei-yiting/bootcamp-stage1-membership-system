@@ -1,10 +1,13 @@
-// ============= form validation and error message ============
+//======================================================================== 
+//============= sign up form empty check , show error message ============
+//======================================================================== 
+
 const signUpForm = document.getElementById('sign-up-form');
 const accountName = document.getElementById('name');
 const signUpUsername = document.getElementById('sign-up-username');
 const signUpPassword = document.getElementById('sign-up-password');
 
-
+// check if any form field is empty when submit, show error message
 signUpForm.addEventListener('submit', (evt) => {
     
     const accountNameValue = accountName.value.trim();
@@ -31,7 +34,7 @@ signUpForm.addEventListener('submit', (evt) => {
     }
 });
 
-
+// show error message (color change with class)
 function setErrorFor(inputfield, message){
     const formControl = inputfield.parentElement;
     const errorMessage = formControl.querySelector('small');
@@ -41,7 +44,9 @@ function setErrorFor(inputfield, message){
 }
 
 
-//============= Pop up Modal ================
+//===============================================
+//============= Sign Up Pop up Modal ============
+//===============================================
 
 const modalBtn = document.getElementById('signup-modal');
 const modal = document.getElementById('modal-bg');
@@ -58,7 +63,10 @@ modalCloseBtn.addEventListener('click', ()=>{
     signInArea.classList.remove('hide');
 });
 
-// ============ Flash message ================
+
+//=====================================================
+//============= Dismissable Flash message  ============
+//=====================================================
 
 const message = document.getElementById('message');
 const messageClose = document.getElementById('message-close');
