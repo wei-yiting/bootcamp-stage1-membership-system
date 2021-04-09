@@ -134,9 +134,9 @@ def signout():
 ########## API ##########
 #########################
 
-### api for getting specified users info ###
+##### api for getting specified users info #####
 @app.route('/api/users', methods=['GET'])
-def get_user():
+def inquire_user():
     if 'status' not in session:
         
         return "登入後才能看到此頁內容"
@@ -163,7 +163,7 @@ def get_user():
         return jsonify(response)
 
 
-### api for update user's name ###
+##### api for update user's name #####
 @app.route('/api/user', methods=['POST'])
 def change_name():
     req = request.get_json();
@@ -185,6 +185,23 @@ def change_name():
         }),200)
         return response
 
+@app.route('/api/user', methods=['GET'])
+def get_user():
+    
+    if 'status' in session:
+        user = User.query.filter_by(username=session['username']).first()
+        
+        response = {
+            "data":{
+                "id":user.id,
+                "name":user.name,
+                "username": user.username.decode('utf-8')
+            }
+        }
+        return jsonify(response)
+    
+    return "登入後才能看到此頁內容"
+        
 
 
 if __name__ == '__main__':

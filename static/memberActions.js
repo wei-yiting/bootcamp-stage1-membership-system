@@ -1,3 +1,18 @@
+// ==== initially show username on page ====
+getName();
+
+//========================================================
+//============= get and show user name (AJAX) ============
+//========================================================
+async function getName(){
+    fetch(`${window.origin}/api/user`)
+    .then( res => res.json())
+    .then( data => {
+        const name = data.data.name;
+        document.getElementById('name').innerText = name;
+    })
+}
+
 //=========================================================== 
 //============= member name search result (AJAX) ============
 //===========================================================
@@ -68,7 +83,7 @@ changeNameForm.addEventListener('submit', evt => {
         .then( data => {
             // show update result
             const updataResult = document.getElementById('updateResult');
-            const updatedName = document.getElementById('updatedName');
+            const updatedName = document.getElementById('name');
             if (data.ok){
                 updataResult.innerText = "更新成功";
                 updatedName.innerText = newName;
