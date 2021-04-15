@@ -1,4 +1,5 @@
 import os
+import time
 import datetime
 from flask import Flask, render_template, redirect, url_for, request, session, flash, jsonify, make_response
 from flask_sqlalchemy import SQLAlchemy
@@ -16,7 +17,7 @@ app.secret_key = os.urandom(24)
 
 # set up for cookie encryption
 key = os.urandom(24)
-s = URLSafeSerializer(key)
+cookie_encryptor = URLSafeSerializer(key)
 
 # set up for SQL databese and database migration
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
@@ -59,7 +60,7 @@ def index():
     if "message" in session:
         flash_message = session['message']
         flash(flash_message)
-        session['message'] = ''
+        session.pop('message')
     return render_template('index.html')
 
 
@@ -106,10 +107,11 @@ def signin():
             user = User.query.filter_by(username=username).first()
             
             if user.password.decode('utf-8') == password:
-                session['status'] = "已登入"
-                session['name'] = user.name
-                session['username'] = user.username
-                return redirect(url_for('member'))
+                res = make_response(redirect(url_for('member')))
+                res.set_cookie(key='sessionID',
+                               value=cookie_encryptor.dumps(username),
+                               expires=time.time() + 5 * 60)
+                return res
             else:
                 return redirect(url_for('error', message="帳號或密碼輸入錯誤"))
             
@@ -128,21 +130,26 @@ def error():
 ### member page (check if user logged in) ###
 @app.route('/member/')
 def member():
-    if session['status'] and session['status'] == '已登入':
+    session_id = request.cookies.get('sessionID')
+    if session_id and User.query.filter_by(username=cookie_encryptor.loads(session_id)).first():
         return render_template('member.html')
     else:
+        session['message'] = "您必須先登入"
         return redirect(url_for('index'))
 
 
 ### signout url, modify session and redirect to index page ###
 @app.route('/signout')
 def signout():
-    if not session['status']:
-        return redirect(url_for('index'))
-    elif session['status'] == '已登入':
-        session.pop('status', None)
-        session['name'] = ''
+    session_id = request.cookies.get('sessionID')
+    
+    if session_id and User.query.filter_by(username=cookie_encryptor.loads(session_id)).first():
+        res = make_response(redirect(url_for('index')))
         session['message'] = "您已成功登出"
+        res.set_cookie(key='sessionID',value='', expires=0)
+        return res
+    
+    else:
         return redirect(url_for('index'))
     
     
@@ -151,14 +158,13 @@ def signout():
 ########## API ##########
 #########################
 
-##### api for getting specified users info #####
+##### api for getting specified other user's info #####
 @app.route('/api/users', methods=['GET'])
 def inquire_user():
-    if 'status' not in session:
-        
-        return "登入後才能看到此頁內容"
     
-    elif session['status'] == '已登入':
+    session_id = request.cookies.get('sessionID')
+    
+    if session_id and User.query.filter_by(username=cookie_encryptor.loads(session_id)).first():
         username_to_get = request.args.get('username')
     
         if User.query.filter_by(username=username_to_get).first():
@@ -178,35 +184,43 @@ def inquire_user():
             }
 
         return jsonify(response)
-
+    
+    else:
+        return "登入後才能看到此頁內容"
 
 ##### api for update user's name #####
 @app.route('/api/user', methods=['POST'])
 def change_name():
-    req = request.get_json();
-    new_name = req['name']
+    session_id = request.cookies.get('sessionID')
+    if session_id and User.query.filter_by(username=cookie_encryptor.loads(session_id)).first():
     
-    user = User.query.filter_by(username=session['username']).first()
-    user.name = new_name
-    try:
-        db.session.add(user)
-        db.session.commit()
-        session['name'] = new_name
-        response = make_response(jsonify({
-            "ok":True
-        }),200)
-        return response
-    except:
-        response = make_response(jsonify({
-            "error":True
-        }),200)
-        return response
+        req = request.get_json();
+        new_name = req['name']
+        
+        user = User.query.filter_by(username=cookie_encryptor.loads(session_id)).first()
+        user.name = new_name
+        try:
+            db.session.add(user)
+            db.session.commit()
+            session['name'] = new_name
+            response = make_response(jsonify({
+                "ok":True
+            }),200)
+            return response
+        except:
+            response = make_response(jsonify({
+                "error":True
+            }),200)
+            return response
+    else:
+        return "您沒有更改使用者姓名的權限"
 
+##### api for retriving user's own name #####
 @app.route('/api/user', methods=['GET'])
 def get_user():
-    
-    if 'status' in session:
-        user = User.query.filter_by(username=session['username']).first()
+    session_id = request.cookies.get('sessionID')
+    if session_id and User.query.filter_by(username=cookie_encryptor.loads(session_id)).first():
+        user = User.query.filter_by(username=cookie_encryptor.loads(session_id)).first()
         
         response = {
             "data":{
